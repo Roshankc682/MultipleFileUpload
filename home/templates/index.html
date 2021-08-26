@@ -14,27 +14,25 @@
                     type="text/css"
                     href="https://unpkg.com/file-upload-with-preview@4.1.0/dist/file-upload-with-preview.min.css"
                 /> 
-
   </head>
   <body>
-
-
-
 <div class="container mt-3">
-<h3>Upload files</h3>
+    <a href="/image" class="btn btn-info mt-4">All photo</a>
+<center><h3>Upload files</h3></center>
 <form method="POST" id="myUniqueUploadId" enctype="multipart/form-data">
 {% csrf_token %}
 <div class="input-group mb-3 ">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">Information Name : </span>
+    <span class="input-group-text" id="basic-addon1">Album Name : </span>
   </div>
-  <input type="text" class="form-control" name="information_name" placeholder="Type information Name" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" class="form-control" name="Album" 
+  placeholder="Type Album Name" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
 <div class="row mt-2">
-    <div class="form-group col-md-8"
-        <label>Add Skills</label>
-        <input type="text" required class="form-control" name="test" placeholder="Type skills"/>
+    <div class="form-group col-md-8">
+        <label>Add Description</label>
+        <input type="text" required class="form-control" name="description" placeholder="Type Description"/>
     </div>
 
 <div class="form-group col-md-4">
@@ -42,7 +40,7 @@
 </div>
 </div>
 
-<div class="row" id="skill_row"></div>
+<div class="row" id="des_row"></div>
 
 
 <div class="custom-file-container" data-upload-id="myUniqueUploadId">
@@ -90,11 +88,11 @@
     var current = 1;
     function AddTag(){
         
-        var element = document.getElementById('skill_row')
+        var element = document.getElementById('des_row')
         var html = `<div class="row mt-2 ml-2" id="curren${current}">
     <div class="form-group col-md-8"
-        <label>Add Skills</label>
-        <input type="text" required class="form-control" name="skills" placeholder="Type skills"/>
+        <label>Add Description</label>
+        <input type="text" required class="form-control" name="description" placeholder="Type Description"/>
     </div>
         <div class="form-group col-md-4 ">
             <button type="button" onclick="RemoveTag(${current})" class="btn btn-danger mt-4">Remove</button>
@@ -106,8 +104,6 @@
     }
 
     function RemoveTag(id){
-        
-//        console.log(id)
         var div = document.getElementById("curren"+id.toString())
         div.remove()
     }

@@ -1,29 +1,38 @@
-from .models import Informations , Images
+from .models import Description , Images
 from django.shortcuts import render
 from django.utils import six
 import json
+from django.core import serializers
+from django.http import HttpResponse
 
 def index_page(request):
     if request.method == "POST":
         images = request.FILES.getlist('image_name')
-        # print(images)
         post_dict = dict(six.iterlists(request.POST))
-        print(post_dict)
-        skills_name = post_dict["skills"]
+        description_name = post_dict["description"]
+        # this line don't need but 
         c = 1
-        name_image = {}
-        for thisisname in range(len(skills_name)):
-            name_image[str(c)]=skills_name[thisisname]
+        description_name___ = {}
+        for thisisname in range(len(description_name)):
+            description_name___[str(c)]=description_name[thisisname]
             c += 1
-        print(name_image)
-        information = Informations.objects.create(information_name=request.POST["information_name"],json_text_field=name_image)
-        information.json_text_field = json.dumps(skills_name)
-        information.save()
-
+        pic_description = Description.objects.create(Album=request.POST["Album"],pic_description=description_name___)
+        pic_description.pic_description = json.dumps(description_name)
+        pic_description.save()
         for image in images:
-            print(image)
-            Images.objects.create(information=information,image = image)
-
+            Images.objects.create(pic_description=pic_description,image = image)
         return render(request, "index.html")
     else:
         return render(request, "index.html")
+
+
+def image_load(request):
+    try:
+        img = Images.objects.all()
+        img_json = serializers.serialize('json', img)
+        return HttpResponse(img_json, content_type='application/json')
+    except:
+        return render(request, "index.html")
+
+
+    

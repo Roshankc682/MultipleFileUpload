@@ -1,13 +1,11 @@
 from django.db import models
 
-class Informations(models.Model):
-    information_name = models.CharField(max_length=100)
-    json_text_field = models.TextField(default="{}")
+from django.db import models
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updatet_at = models.DateTimeField(auto_now=True)
-
+class Description(models.Model):
+    Album = models.CharField(max_length=100)
+    pic_description = models.TextField(default="{}")
 
 class Images(models.Model):
-    information = models.ForeignKey(Informations, on_delete=models.CASCADE)
+    pic_description = models.ForeignKey(Description, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="images")
